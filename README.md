@@ -6,12 +6,12 @@ Analisar o desempenho da busca sequencial em um vetor de produtos carregado a pa
 
 ## Estrutura do Produto
 
-typedef struct {
-    int id;
-    char nome[51];
-    char categoria[31];
-    float valor;
-} Produto;
+    typedef struct {
+        int id;
+        char nome[51];
+        char categoria[31];
+        float valor;
+    } Produto;
 
 ## Funcionalidades
 
