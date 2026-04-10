@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/produto.h"
+#include "produto.h"
 
 // Essa função transforma um arquivo textual (nosso dataset) 
 // em uma estrutura de dados em memória (vetor de structs)
 
 
-Produto* carregar_produtos(char* arquivo, int* quantidade) {
+Produto* ler_produtos(char* arquivo, int* quantidade) {
     FILE *dataset = fopen(arquivo,"r");         //abre arquivo no modo leitura
 
     if (dataset == NULL) {                      //faz verificação de erro
@@ -30,6 +30,9 @@ Produto* carregar_produtos(char* arquivo, int* quantidade) {
 
     //buffer armazena temporariamente cada linha do arquivo antes do processamento
     char linha[256]; 
+
+    fgets(linha, sizeof(linha), dataset); //pula o cabeçalho do dataset
+    
     while (fgets(linha, sizeof(linha), dataset) != NULL) { //fgets() lê uma linha inteira do arquivo
 
         linha[strcspn(linha, "\n")] = '\0'; //remove '\n' que vem junto da fgets()
