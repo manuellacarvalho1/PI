@@ -7,22 +7,25 @@
 // em uma estrutura de dados em memória (vetor de structs)
 
 
-Produto* ler_produtos(char* arquivo, int* quantidade) {
-    FILE *dataset = fopen(arquivo,"r");         //abre arquivo no modo leitura
+Produto* ler_produtos(char* arquivo, int* quantidade) 
+{
+    FILE *dataset = fopen(arquivo,"r");      //abre arquivo no modo leitura
 
-    if (dataset == NULL) {                      //faz verificação de erro
+    if (dataset == NULL) 
+    {                      
         printf("Erro ao abrir o arquivo.\n");
         return NULL;
     }
 
-    //inicializa ponteiro para retornar ao programa principal quantos registros foram carregados
+    //inicializa ponteiro pra retornar quantos registros foram carregados
     *quantidade = 0;
 
-    //cria um vetor dinâmico com capacidade inicial de 100 elementos
+    //cria vetor dinâmico com capacidade inicial de 100 elementos
     int capacidade = 100;
     Produto *vetor = malloc(capacidade * sizeof(Produto));
 
-    if (vetor == NULL) {  //caso dê erro no vetor
+    if (vetor == NULL) 
+    {  
         printf("Erro de alocação de memória.\n");
         fclose(dataset);
         return NULL;
@@ -33,23 +36,22 @@ Produto* ler_produtos(char* arquivo, int* quantidade) {
 
     fgets(linha, sizeof(linha), dataset); //pula o cabeçalho do dataset
     
-    while (fgets(linha, sizeof(linha), dataset) != NULL) { //fgets() lê uma linha inteira do arquivo
-
+    while (fgets(linha, sizeof(linha), dataset) != NULL) //fgets() lê uma linha inteira do arquivo
+    { 
         linha[strcspn(linha, "\n")] = '\0'; //remove '\n' que vem junto da fgets()
 
         //separando em campos
-        char *campo_id = strtok(linha, ",");   //strtok() modifica a string original, substituindo a vírgula por '\0'
+        char *campo_id = strtok(linha, ",");   //strtok() modifica a linha, substituindo vírgula por '\0'
         char *campo_nome = strtok(NULL, ",");     
         char *campo_categoria = strtok(NULL, ",");
         char *campo_valor = strtok(NULL, ",");
 
         // valida se todos os campos foram corretamente extraídos
-        if (campo_id == NULL || campo_nome == NULL || 
-            campo_categoria == NULL || campo_valor == NULL) {
+        if (campo_id == NULL || campo_nome == NULL || campo_categoria == NULL || campo_valor == NULL) {
             continue; //pula linha inválida
         }
 
-        // convertendo porque o CSV é lido como texto (strings)
+        // convertendo tipos
         int id = atoi(campo_id);            //atoi() converte string pra int
         float valor = atof(campo_valor);    //atof() converte string pra float
 
@@ -62,26 +64,23 @@ Produto* ler_produtos(char* arquivo, int* quantidade) {
         p.categoria[30] = '\0';
         p.valor = valor;
 
-        //verificando capacidade
-        if (*quantidade == capacidade) {
-            capacidade *= 2;                   //dobra capacidade se o vetor encher
-
-            Produto *temp = realloc(vetor, capacidade * sizeof(Produto));  //usa variável temporária para evitar perder o ponteiro original
-                                                                           //caso realloc falhe
-            if (temp == NULL) {
+        if (*quantidade == capacidade) 
+        {
+            capacidade *= 2;  //dobra capacidade se o vetor encher
+            Produto *temp = realloc(vetor, capacidade * sizeof(Produto));  //variável temporária para evitar perder
+                                                                           //o ponteiro original se realloc falhar
+            if (temp == NULL) 
+            {
                 printf("Erro ao realocar memória.\n");
                 free(vetor);
                 fclose(dataset);
                 return NULL;
             }
-
             vetor = temp;
         }
-        //adicionando o produto no vetor e incrementando a quantidade
-        vetor[*quantidade] = p;
+        vetor[*quantidade] = p; //adiciona o produto no vetor e incrementa a quantidade
         (*quantidade)++;
     }
-
     fclose(dataset); //fecha arquivo
     return vetor;    //retorna nosso vetor de structs preenchido
 }
