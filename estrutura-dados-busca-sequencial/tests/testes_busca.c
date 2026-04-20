@@ -41,11 +41,9 @@ int main() {
         fclose(f);
     }
 
-    // Roda para todos os datasets
+    // Rodando o teste
     executar_experimento("../data/dataset1.csv");
-    executar_experimento("../data/dataset2.csv");
-    executar_experimento("../data/dataset3.csv");
-    executar_experimento("../data/dataset4.csv");
+
 
     return 0;
 }
