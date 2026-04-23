@@ -19,17 +19,18 @@ void executar_experimento(char* nome_arquivo) {
         else ids[i] = -1;
     }
 
-    // Medir o tempo médio (sua função!)
-    double tempo = calcular_tempo_medio(produtos, quantidade, ids, 1000);
+    // Medir o tempo
+    double tempo_total = calcular_tempo_total(produtos, quantidade, ids, 1000);
+    double tempo_medio = tempo_total / 1000;
 
     // Salvar no CSV de resultados
-    FILE* f = fopen("../results/resultados_testes.csv", "a"); // "a" de append (adicionar)
+    FILE* f = fopen("../results/resultados_testes.csv", "a");
     if(f) {
-        fprintf(f, "%s; %d; %.10f\n", nome_arquivo, quantidade, tempo);
-        fclose(f);
+    fprintf(f, "%s; %d; %.10f; %.10f\n", nome_arquivo, quantidade, tempo_total, tempo_medio);        
+    fclose(f);
     }
 
-    printf("Concluido: %s | Tempo: %.10f\n", nome_arquivo, tempo);
+    printf("Concluido: %s | Total: %.6f | Medio: %.10f\n", nome_arquivo, tempo_total, tempo_medio);    
     free(produtos);
 }
 
@@ -37,7 +38,7 @@ int main() {
     // Limpa o arquivo de resultados antes de começar
     FILE* f = fopen("../results/resultados_testes.csv", "w");
     if(f) {
-        fprintf(f, "Arquivo; Total_Registros; Tempo_Medio_Segundos\n");
+        fprintf(f, "Arquivo; Total_Registros; Tempo_total; Tempo_Medio_Segundos\n");
         fclose(f);
     }
 
