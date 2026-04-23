@@ -20,8 +20,8 @@ void executar_experimento(char* nome_arquivo) {
     }
 
     // Medir o tempo
-    double tempo_total = calcular_tempo_total(produtos, quantidade, ids, 1000);
-    double tempo_medio = tempo_total / 1000;
+    double tempo_medio = calcular_tempo_medio(produtos, quantidade, ids, 1000);
+    double tempo_total = tempo_medio * 1000;
 
     // Salvar no CSV de resultados
     FILE* f = fopen("../results/resultados_testes.csv", "a");
