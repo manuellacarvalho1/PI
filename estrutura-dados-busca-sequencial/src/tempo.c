@@ -3,7 +3,7 @@
 #include "busca.h"
 
 //essa função calcula quanto tempo leva uma busca em média
-double calcular_tempo_medio(Produto* vetor, int tamanho, int*ids_busca, int qtd_buscas) {
+double calcular_tempo_total(Produto* vetor, int tamanho, int*ids_busca, int qtd_buscas) {
     clock_t inicio, fim;
 
     //momento em que o teste começa (conta em ticks de CPU)
@@ -15,5 +15,5 @@ double calcular_tempo_medio(Produto* vetor, int tamanho, int*ids_busca, int qtd_
     fim = clock();
 
     //calcula a diferença entre fim e início, CLOCKS_PER_SEC converte os ticks de CPU em segundos
-    return ((double)(fim - inicio) / CLOCKS_PER_SEC) / qtd_buscas;
+    return (double)(fim - inicio) / CLOCKS_PER_SEC;
 }
