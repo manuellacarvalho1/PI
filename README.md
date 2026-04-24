@@ -19,9 +19,11 @@ O código foi configurado para realizar um loop de 1000 buscas para garantir uma
 Para compilar o projeto unificando todos os módulos, utilize o GCC na raiz do projeto:
 
 ```bash
-gcc src/*.c -o programa
+1. cd PI/estrutura-dados-busca-sequencial
 
-Para executar o protocolo de testes:
+2. gcc src/*.c -o programa
+
+3. Para executar o protocolo de testes:
 
 ./programa
 
