@@ -18,6 +18,8 @@ typedef struct {    //struct pra tabela hash
 TabelaHash* criar_tabela_hash(int tamanho); //tamanho deve ser igual à quantidade de registros do dataset 1
 void liberar_tabela_hash(TabelaHash *hash);
 int funcao_hash(int id, int tamanho);
+void inserir_produtos(TabelaHash *hash, Produto *vetor, int quantidade);
+int contar_colisoes(TabelaHash *hash);
 
 //head = ponteiro pro primeiro elemento da lista
 No* criar_no(Produto produto);

@@ -63,6 +63,28 @@ void liberar_tabela_hash(TabelaHash *hash)
     free(hash);
 }
 
+// insere todos os produtos do vetor na tabela hash
+void inserir_produtos(TabelaHash *hash, Produto *vetor, int quantidade)
+{
+    for (int i = 0; i < quantidade; i++)
+    {
+        int indice = funcao_hash(vetor[i].id, hash->tamanho);
+        inserir_lista(&hash->tabela[indice], vetor[i]);
+    }
+}
+
+// conta colisões: posições com mais de um elemento
+int contar_colisoes(TabelaHash *hash)
+{
+    int colisoes = 0;
+    for (int i = 0; i < hash->tamanho; i++)
+    {
+        if (hash->tabela[i] != NULL && hash->tabela[i]->proximo != NULL)
+            colisoes++;
+    }
+    return colisoes;
+}
+
 No* criar_no(Produto produto)
 {
     No *novo = malloc(sizeof(No));
@@ -103,3 +125,4 @@ No* buscar_lista(No *head, int id) //aqui a busca é sequencial O(n)
 
     return NULL;
 }
+

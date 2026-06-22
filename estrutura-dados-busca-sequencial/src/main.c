@@ -5,6 +5,8 @@
 #include "leitura_csv.h"
 #include "busca.h"
 #include "tempo.h"
+#include "hash.h"
+#include "tempo_hash.h"
 
 
 int main() 
@@ -42,15 +44,52 @@ int main()
         else ids_teste[i] = -1;
     }
 
+     // ── FASE 1: busca sequencial ──────────────────────────────────
+    printf("\n--- BUSCA SEQUENCIAL ---\n");
+
     // repetição dos testes e apresentação da média final
-    double soma = 0;
+    double soma_seq = 0;
     for(int j = 0; j < 3; j++) {
         double t = calcular_tempo_total(produtos, quantidade, ids_teste, 1000);
         printf("Rodada %d: %.10f s\n", j+1, t);
-        soma += t;
+        soma_seq += t;
     }
 
-    printf("\nMédia final para este: %.10f s\n", soma / 3); 
+    double media_seq = soma_seq / 3;
+    printf("\nMédia final para este: %.10f s\n", media_seq); 
 
+     // ── FASE 2: tabela hash ───────────────────────────────────────
+    printf("\n--- TABELA HASH ---\n");
+
+    TabelaHash *hash = criar_tabela_hash(100003);
+    if (hash == NULL) {
+        free(produtos);
+        return 1;
+    }
+
+    inserir_produtos(hash, produtos, quantidade);
+
+    int colisoes = contar_colisoes(hash);
+    printf("Total de colisões: %d\n", colisoes);
+
+    double soma_hash = 0;
+    for(int j = 0; j < 3; j++) {
+        double t = calcular_tempo_hash(hash, ids_teste, 1000);
+        printf("Rodada %d: %.10f s\n", j+1, t);
+        soma_hash += t;
+    }
+    double media_hash = soma_hash / 3;
+    printf("Média final: %.10f s\n", media_hash);
+
+    // ── TABELA COMPARATIVA ────────────────────────────────────────
+    printf("\n--- TABELA COMPARATIVA ---\n");
+    printf("%-25s %-20s %-20s\n", "Métrica", "Busca Sequencial", "Tabela Hash");
+    printf("%-25s %-20.10f %-20.10f\n", "Tempo médio (s)", media_seq, media_hash);
+    printf("%-25s %-20s %-20s\n", "Complexidade teórica", "O(n)", "O(1)");
+    printf("%-25s %-20s %-20d\n", "Colisões", "-", colisoes);
+
+    // libera memória
+    liberar_tabela_hash(hash);
+    free(produtos);
     return 0;
 }
