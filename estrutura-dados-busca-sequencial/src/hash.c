@@ -44,8 +44,7 @@ int funcao_hash(int id, int tamanho)
 
 void liberar_tabela_hash(TabelaHash *hash)
 {
-    if (hash == NULL)
-    {
+    if (hash == NULL) {
         return;
     }
 
@@ -60,7 +59,47 @@ void liberar_tabela_hash(TabelaHash *hash)
             free(temp);
         }
     }
-
     free(hash->tabela);
     free(hash);
+}
+
+No* criar_no(Produto produto)
+{
+    No *novo = malloc(sizeof(No));
+
+    if (novo == NULL) {
+        return NULL;
+    }
+
+    novo->produto = produto;
+    novo->proximo = NULL;
+
+    return novo;
+}
+
+void inserir_lista(No **head, Produto produto) //insere no início = O(1)
+{
+    No *novo = criar_no(produto);
+
+    if (novo == NULL) {
+        return;
+    }
+
+    novo->proximo = *head;
+    *head = novo;
+}
+
+No* buscar_lista(No *head, int id) //aqui a busca é sequencial O(n)
+{
+    No *atual = head;
+
+    while (atual != NULL)
+    {
+        if (atual->produto.id == id) {
+            return atual;
+        }
+        atual = atual->proximo;
+    }
+
+    return NULL;
 }
