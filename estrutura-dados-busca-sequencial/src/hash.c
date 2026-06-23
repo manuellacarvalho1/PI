@@ -73,15 +73,25 @@ void inserir_produtos(TabelaHash *hash, Produto *vetor, int quantidade)
     }
 }
 
-// conta colisões: posições com mais de um elemento
+//contabiliza quantos elementos foram inseridos em posições já ocupadas da tabela
 int contar_colisoes(TabelaHash *hash)
 {
     int colisoes = 0;
-    for (int i = 0; i < hash->tamanho; i++)
-    {
-        if (hash->tabela[i] != NULL && hash->tabela[i]->proximo != NULL)
-            colisoes++;
+
+    for (int i = 0; i < hash->tamanho; i++) {
+        
+        No *atual = hash->tabela[i];
+
+        if (atual != NULL) {
+            atual = atual->proximo; // pula o primeiro elemento
+
+            while (atual != NULL) {
+                colisoes++;
+                atual = atual->proximo;
+            }
+        }
     }
+
     return colisoes;
 }
 
@@ -126,3 +136,13 @@ No* buscar_lista(No *head, int id) //aqui a busca é sequencial O(n)
     return NULL;
 }
 
+No* buscar_hash(TabelaHash *hash, int id)
+{
+    if (id < 0) {
+        return NULL;
+    }
+
+    int indice = funcao_hash(id, hash->tamanho);
+
+    return buscar_lista(hash->tabela[indice], id);
+}

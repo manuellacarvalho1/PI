@@ -6,8 +6,6 @@
 #include "busca.h"
 #include "tempo.h"
 #include "hash.h"
-#include "tempo_hash.h"
-
 
 int main() 
 {   
@@ -50,7 +48,7 @@ int main()
     // repetição dos testes e apresentação da média final
     double soma_seq = 0;
     for(int j = 0; j < 3; j++) {
-        double t = calcular_tempo_total(produtos, quantidade, ids_teste, 1000);
+        double t = calcular_tempo_sequencial(produtos, quantidade, ids_teste, 1000);
         printf("Rodada %d: %.10f s\n", j+1, t);
         soma_seq += t;
     }
