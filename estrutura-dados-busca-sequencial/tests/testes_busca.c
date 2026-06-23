@@ -20,13 +20,14 @@ void executar_experimento(char* nome_arquivo) {
     }
 
     // Medir o tempo
-    double tempo_medio = calcular_tempo_medio(produtos, quantidade, ids, 1000);
+    double tempo_medio = calcular_tempo_sequencial(produtos, quantidade, ids, 1000);
     double tempo_total = tempo_medio * 1000;
 
     // Salvar no CSV de resultados
     FILE* f = fopen("../results/resultados_testes.csv", "a");
     if(f) {
-    fprintf(f, "%s; %d; %.10f; %.10f\n", nome_arquivo, quantidade, tempo_total, tempo_medio);        
+    fprintf(f, "sequencial -> %-18s | %-15d | %-20.10f | %-20.10f | %-10s\n", 
+        nome_arquivo, quantidade, tempo_total, tempo_medio, "-");        
     fclose(f);
     }
 
@@ -38,7 +39,8 @@ int main() {
     // Limpa o arquivo de resultados antes de começar
     FILE* f = fopen("../results/resultados_testes.csv", "w");
     if(f) {
-        fprintf(f, "Arquivo; Total_Registros; Tempo_total; Tempo_Medio_Segundos\n");
+        fprintf(f, "%-35s | %-15s | %-20s | %-20s | %-10s\n",
+        "Arquivo", "Total_Registros", "Tempo_total", "Tempo_Medio_Segundos", "Colisões");
         fclose(f);
     }
 
