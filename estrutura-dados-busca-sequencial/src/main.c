@@ -53,8 +53,11 @@ int main()
         soma_seq += t;
     }
 
-    double media_seq = soma_seq / 3;
-    printf("\nMédia final para este: %.10f s\n", media_seq); 
+    double tempo_total_seq = soma_seq / 3;      // média das 3 rodadas
+    double tempo_medio_seq = tempo_total_seq / 1000; // média por busca
+
+    printf("\nTempo total médio: %.10f s\n", tempo_total_seq);
+    printf("Tempo médio por busca: %.10f s\n", tempo_medio_seq);
 
      // ── FASE 2: tabela hash ───────────────────────────────────────
     printf("\n--- TABELA HASH ---\n");
@@ -76,15 +79,21 @@ int main()
         printf("Rodada %d: %.10f s\n", j+1, t);
         soma_hash += t;
     }
-    double media_hash = soma_hash / 3;
-    printf("Média final: %.10f s\n", media_hash);
+
+    double tempo_total_hash = soma_hash / 3;      // média das 3 rodadas
+    double tempo_medio_hash = tempo_total_hash / 1000; // média por busca
+
+    printf("Tempo total médio: %.10f s\n", tempo_total_hash);
+    printf("Tempo médio por busca: %.10f s\n", tempo_medio_hash);
 
     // ── TABELA COMPARATIVA ────────────────────────────────────────
     printf("\n--- TABELA COMPARATIVA ---\n");
+
     printf("%-25s %-20s %-20s\n", "Métrica", "Busca Sequencial", "Tabela Hash");
-    printf("%-25s %-20.10f %-20.10f\n", "Tempo médio (s)", media_seq, media_hash);
-    printf("%-25s %-20s %-20s\n", "Complexidade teórica", "O(n)", "O(1)");
-    printf("%-25s %-20s %-20d\n", "Colisões", "-", colisoes);
+    printf("%-25s %-20.10f %-20.10f\n", "Tempo total (s)", tempo_total_seq, tempo_total_hash);
+    printf("%-25s %-20.10f %-20.10f\n", "Tempo medio (s)", tempo_medio_seq, tempo_medio_hash);
+    printf("%-25s %-20s %-20s\n", "Complexidade teorica", "O(n)", "O(1)");
+    printf("%-25s %-20s %-20d\n", "Colisoes", "-", colisoes);
 
     // libera memória
     liberar_tabela_hash(hash);
