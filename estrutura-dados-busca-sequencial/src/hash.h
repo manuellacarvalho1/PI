@@ -25,6 +25,6 @@ int contar_colisoes(TabelaHash *hash);
 No* criar_no(Produto produto);
 void inserir_lista(No **head, Produto produto);
 No* buscar_lista(No *head, int id);
-
+No* buscar_hash(TabelaHash *hash, int id);
 
 #endif
