@@ -31,9 +31,9 @@ void executar_experimento_hash(char* nome_arquivo) {
     int colisoes = contar_colisoes(hash);
 
     // Medir o tempo
-    double tempo_medio = calcular_tempo_hash(hash, ids, 1000);
-    double tempo_total = tempo_medio * 1000;
-
+    double tempo_total = calcular_tempo_hash(hash, ids, 1000);
+    double tempo_medio_por_busca = tempo_total / 1000;
+    
     // Salvar no CSV de resultados
     FILE* f = fopen("../results/resultados_testes.csv", "a");
     if(f) {
@@ -42,13 +42,13 @@ void executar_experimento_hash(char* nome_arquivo) {
         if (tamanho == 0) {
             fprintf(f, "Arquivo; Total_Registros; Tempo_total; Tempo_Medio_Segundos\n");
         }
-        fprintf(f, "hash -> %-27s | %-15d | %-20.10f | %-20.10f | %-10d\n", 
-        nome_arquivo, quantidade, tempo_total, tempo_medio, colisoes);
+        fprintf(f, "hash -> %-27s | %-15d | %-20.10f | %-20.10f | %-10d\n",
+        nome_arquivo, quantidade, tempo_total, tempo_medio_por_busca, colisoes);
         fclose(f);
     }
 
-    printf("Concluido: %s | Total: %.6f | Medio: %.10f | Colisoes: %d\n", 
-           nome_arquivo, tempo_total, tempo_medio, colisoes);
+    printf("Concluido: %s | Total: %.6f | Medio: %.10f | Colisoes: %d\n",
+       nome_arquivo, tempo_total, tempo_medio_por_busca, colisoes);
 
     liberar_tabela_hash(hash);
     free(produtos);
