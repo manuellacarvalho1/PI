@@ -1,2 +1,3 @@
-Arquivo; Total_Registros; Tempo_total; Tempo_Medio_Segundos
-../data/dataset1.csv; 100003; 0.2182970000; 0.0002182970
+Arquivo                             | Total_Registros | Tempo_total          | Tempo_Medio_Segundos | Colisões 
+sequencial -> ../data/dataset1.csv | 100003          | 0.2292100000         | 0.0002292100         | -         
+hash -> ../data/dataset1.csv        | 100003          | 0.0000080000         | 0.0000000080         | 0         
